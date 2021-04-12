@@ -1,0 +1,35 @@
+﻿-- Create table
+create table AUDIT_DDL
+(
+  id           NUMBER not null,
+  arcdate      DATE not null,
+  osuser       VARCHAR2(255),
+  current_user VARCHAR2(255),
+  host         VARCHAR2(255),
+  terminal     VARCHAR2(255),
+  object_owner VARCHAR2(255),
+  object_type  VARCHAR2(255),
+  object_name  VARCHAR2(255),
+  sysevent     VARCHAR2(255)
+)
+tablespace TEST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255;
+-- Add comments to the table 
+comment on table AUDIT_DDL
+  is 'Аудит DDL операций над схемой';
+-- Create/Recreate indexes 
+create index AUDIT_DDL_OBJ_NAME_IX on AUDIT_DDL (OBJECT_NAME)
+  tablespace TEST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table AUDIT_DDL
+  add constraint AUDIT_DDL_PK primary key (ID)
+  using index 
+  tablespace TEST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
